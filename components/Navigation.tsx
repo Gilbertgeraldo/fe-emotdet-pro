@@ -2,64 +2,105 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LayoutDashboard, Type, Camera, Zap } from 'lucide-react'; // Import ikon tambahan
 import { useState } from 'react';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+  // Konfigurasi Menu
   const navItems = [
-    { href: '/', label: 'Dashboard' },
-    { href: '/text', label: 'Text' },
-    { href: '/audio', label: 'Audio' },
-    { href: '/multimodal', label: 'Multimodal' },
+    { 
+      href: '/', 
+      label: 'Dashboard', 
+      icon: LayoutDashboard 
+    },
+    { 
+      href: '/text', 
+      label: 'Text Analysis', 
+      icon: Type 
+    },
+    { 
+      href: '/EmotionCam', // INI YANG PENTING: Harus sesuai nama folder di 'app/face'
+      label: 'Face Detection', 
+      icon: Camera 
+    },
+    { 
+      href: '/multimodal', 
+      label: 'Multimodal', 
+      icon: Zap 
+    },
   ];
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-4">
+    <nav className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-blue-600">
-            Emotion Detector
+          
+          {/* LOGO */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="bg-indigo-600 p-1.5 rounded-lg text-white group-hover:bg-indigo-700 transition">
+               <Zap size={20} fill="currentColor" />
+            </div>
+            <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              StatCorr AI
+            </span>
           </Link>
 
-          <div className="hidden md:flex gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`font-medium transition-colors ${
-                  pathname === item.href
-                    ? 'text-blue-600 border-b-2 border-blue-600'
-                    : 'text-gray-700 hover:text-blue-600'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+          {/* DESKTOP MENU */}
+          <div className="hidden md:flex gap-1">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? 'bg-indigo-50 text-indigo-700 ring-1 ring-indigo-200'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  }`}
+                >
+                  <item.icon size={16} className={isActive ? 'text-indigo-600' : 'text-gray-400'} />
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
 
+          {/* MOBILE MENU BUTTON */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
+        {/* MOBILE DROPDOWN */}
         {isOpen && (
-          <div className="md:hidden mt-4 flex flex-col gap-4 pb-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-gray-700 hover:text-blue-600 font-medium"
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <div className="md:hidden mt-2 py-2 border-t border-gray-100 animate-in slide-in-from-top-2">
+            <div className="flex flex-col gap-1">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                      isActive
+                        ? 'bg-indigo-50 text-indigo-700'
+                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <item.icon size={18} className={isActive ? 'text-indigo-600' : 'text-gray-400'} />
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

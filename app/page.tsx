@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { BarChart3, Volume2, Zap, Sparkles, Brain, TrendingUp } from 'lucide-react';
+import { BarChart3, Camera, Zap, Sparkles, Brain, TrendingUp } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -28,39 +28,39 @@ export default function Home() {
 
           <h2 className="text-6xl font-extrabold mb-4">
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Emotion & Anger Detection
+              Text & Face Emotion AI
             </span>
           </h2>
           <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto font-medium">
-            Advanced multimodal emotion detection using AI-powered technology
+            Experience the power of Multimodal AI. Analyze sentiments from text and detect real-time emotions via webcam using Computer Vision.
           </p>
           
           {/* Stats Bar */}
           <div className="flex justify-center gap-8 mb-8">
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">99%</div>
-              <div className="text-sm text-gray-600">Accuracy</div>
+              <div className="text-3xl font-bold text-blue-600">NLP</div>
+              <div className="text-sm text-gray-600">Text Processing</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600">3</div>
-              <div className="text-sm text-gray-600">Modalities</div>
+              <div className="text-3xl font-bold text-purple-600">CV</div>
+              <div className="text-sm text-gray-600">Computer Vision</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-pink-600">Fast</div>
-              <div className="text-sm text-gray-600">Real-time</div>
+              <div className="text-3xl font-bold text-pink-600">Live</div>
+              <div className="text-sm text-gray-600">Real-time Stream</div>
             </div>
           </div>
         </div>
 
         {/* Feature Cards with Enhanced Design */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          
+          {/* CARD 1: TEXT ANALYSIS */}
           <Link href="/text">
-            <div className="group relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2">
-              {/* Gradient Overlay on Hover */}
+            <div className="group relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2 h-full">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
               
               <div className="p-8 relative z-10">
-                {/* Icon with Animated Background */}
                 <div className="relative mb-6">
                   <div className="absolute inset-0 bg-blue-500 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
                   <div className="relative flex items-center justify-center h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl group-hover:from-blue-200 group-hover:to-blue-300 transition-all">
@@ -72,47 +72,51 @@ export default function Home() {
                   Text Analysis
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Analyze emotions from text input using advanced AI algorithms
+                  Analyze sentiment and emotional tone from written text using Natural Language Processing models.
                 </p>
                 
-                {/* Arrow Icon */}
                 <div className="mt-4 flex items-center text-blue-600 font-semibold opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-2 transition-all">
-                  <span>Explore</span>
+                  <span>Start Analysis</span>
                   <TrendingUp className="w-4 h-4 ml-2" />
                 </div>
               </div>
             </div>
           </Link>
 
-          <Link href="/audio">
-            <div className="group relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-amber-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+          {/* CARD 2: FACE DETECTION (UPDATED) */}
+          {/* Pastikan route '/face' sesuai dengan nama folder page kamera kamu */}
+          <Link href="/face">
+            <div className="group relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2 h-full">
+              {/* Menggunakan warna Indigo/Violet agar beda */}
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-violet-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
               
               <div className="p-8 relative z-10">
                 <div className="relative mb-6">
-                  <div className="absolute inset-0 bg-amber-500 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                  <div className="relative flex items-center justify-center h-16 bg-gradient-to-br from-amber-100 to-amber-200 rounded-xl group-hover:from-amber-200 group-hover:to-amber-300 transition-all">
-                    <Volume2 className="w-8 h-8 text-amber-600 group-hover:scale-110 transition-transform" />
+                  <div className="absolute inset-0 bg-indigo-500 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                  <div className="relative flex items-center justify-center h-16 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-xl group-hover:from-indigo-200 group-hover:to-indigo-300 transition-all">
+                    {/* Ikon Kamera */}
+                    <Camera className="w-8 h-8 text-indigo-600 group-hover:scale-110 transition-transform" />
                   </div>
                 </div>
                 
-                <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-amber-600 transition-colors">
-                  Audio Analysis
+                <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
+                  Live Face Detection
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Upload audio CSV for precise emotion detection and analysis
+                  Real-time facial expression recognition using webcam. Detects micro-expressions instantly.
                 </p>
                 
-                <div className="mt-4 flex items-center text-amber-600 font-semibold opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-2 transition-all">
-                  <span>Explore</span>
+                <div className="mt-4 flex items-center text-indigo-600 font-semibold opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-2 transition-all">
+                  <span>Open Camera</span>
                   <TrendingUp className="w-4 h-4 ml-2" />
                 </div>
               </div>
             </div>
           </Link>
 
+          {/* CARD 3: MULTIMODAL / AUDIO */}
           <Link href="/multimodal">
-            <div className="group relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2">
+            <div className="group relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2 h-full">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-purple-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
               
               <div className="p-8 relative z-10">
@@ -124,14 +128,14 @@ export default function Home() {
                 </div>
                 
                 <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors">
-                  Multimodal Analysis
+                  Audio & Combined
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Combine text and audio for comprehensive emotion insights
+                  Upload audio datasets or combine multiple modalities for comprehensive deep learning insights.
                 </p>
                 
                 <div className="mt-4 flex items-center text-purple-600 font-semibold opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-2 transition-all">
-                  <span>Explore</span>
+                  <span>Explore Data</span>
                   <TrendingUp className="w-4 h-4 ml-2" />
                 </div>
               </div>
@@ -139,7 +143,7 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* How It Works Section with Enhanced Design */}
+        {/* How It Works Section */}
         <div className="bg-white rounded-3xl shadow-2xl p-10 border border-gray-100">
           <div className="flex items-center gap-3 mb-8">
             <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
@@ -149,19 +153,21 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* Step 1 */}
             <div className="relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity blur-xl"></div>
               <div className="relative bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl group-hover:shadow-lg transition-all">
                 <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full text-white text-3xl font-bold mb-4 shadow-lg">
                   1
                 </div>
-                <h4 className="font-bold text-xl text-gray-900 mb-3">Input Data</h4>
+                <h4 className="font-bold text-xl text-gray-900 mb-3">Choose Input</h4>
                 <p className="text-gray-700 leading-relaxed">
-                  Provide text or upload audio features in CSV format for analysis
+                  Select between typing text or enabling your webcam for live video feed.
                 </p>
               </div>
             </div>
             
+            {/* Step 2 */}
             <div className="relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity blur-xl"></div>
               <div className="relative bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-2xl group-hover:shadow-lg transition-all">
@@ -170,20 +176,21 @@ export default function Home() {
                 </div>
                 <h4 className="font-bold text-xl text-gray-900 mb-3">AI Processing</h4>
                 <p className="text-gray-700 leading-relaxed">
-                  Our AI processes the data using state-of-the-art algorithms
+                  Our model processes frames and text tokens instantly to classify emotions.
                 </p>
               </div>
             </div>
             
+            {/* Step 3 */}
             <div className="relative group">
               <div className="absolute -inset-4 bg-gradient-to-r from-pink-500 to-pink-600 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity blur-xl"></div>
               <div className="relative bg-gradient-to-br from-pink-50 to-pink-100 p-6 rounded-2xl group-hover:shadow-lg transition-all">
                 <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-full text-white text-3xl font-bold mb-4 shadow-lg">
                   3
                 </div>
-                <h4 className="font-bold text-xl text-gray-900 mb-3">Get Results</h4>
+                <h4 className="font-bold text-xl text-gray-900 mb-3">Real-time Result</h4>
                 <p className="text-gray-700 leading-relaxed">
-                  Receive detailed emotion analysis with confidence scores
+                  Get immediate feedback on emotional states (Happy, Sad, Neutral, etc).
                 </p>
               </div>
             </div>
