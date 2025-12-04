@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Navigation from '@/components/Navigation';
-import MultimodalAnalyzer from '@/components/MultimodalAnalyzer';
 import ResultCard from '@/components/resultCard';
 import TextAnalyzer from '@/components/TextAnalyzer';
 import EmotionCam from '@/components/EmotionCam';

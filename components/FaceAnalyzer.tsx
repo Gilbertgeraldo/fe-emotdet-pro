@@ -29,15 +29,13 @@ export default function FaceAnalyzer({ onResult }: FaceAnalyzerProps) {
 
     if (imageSrc) {
       try {
-        // 1. Ubah Base64 ke Blob (File Object)
         const blob = await base64ToBlob(imageSrc);
 
-        // 2. Bungkus dalam FormData (Agar terbaca sebagai UploadFile di FastAPI)
+        // 2. Bungkus dalam FormData
         const formData = new FormData();
         formData.append('file', blob, 'webcam-capture.jpg');
 
-        // 3. Kirim ke Backend (Sesuai router vision.py kamu)
-        // URL ini asumsinya router vision sudah didaftarkan di main.py
+        // 3. Kirim ke Backend
         const response = await axios.post('http://localhost:8000/vision/detect-emotion', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
@@ -52,15 +50,14 @@ export default function FaceAnalyzer({ onResult }: FaceAnalyzerProps) {
             const faceData = data.faces[0];
             
             onResult({
-                emotion: faceData.emotion, // Marah, Senang, dll
+                emotion: faceData.emotion,
                 confidence: (faceData.confidence * 100).toFixed(1) + '%',
                 timestamp: new Date().toLocaleTimeString(),
                 source: 'Live Camera',
-                raw_data: faceData // Data tambahan jika perlu
+                raw_data: faceData 
             });
             setError('');
         } else {
-            // Jika sukses tapi tidak ada wajah
             onResult({
                 emotion: "Wajah tidak terdeteksi",
                 confidence: "0%",
@@ -71,7 +68,6 @@ export default function FaceAnalyzer({ onResult }: FaceAnalyzerProps) {
 
       } catch (err) {
         console.error("API Error:", err);
-        // Jangan spam error di UI, cukup log saja kecuali kritikal
       }
     }
   }, [isAnalyzing, onResult]);

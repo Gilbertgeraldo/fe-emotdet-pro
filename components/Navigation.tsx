@@ -22,15 +22,11 @@ export default function Navigation() {
       icon: Type 
     },
     { 
-      href: '/EmotionCam', // INI YANG PENTING: Harus sesuai nama folder di 'app/face'
+      href: '/EmotionCam', 
       label: 'Face Detection', 
       icon: Camera 
     },
-    { 
-      href: '/multimodal', 
-      label: 'Multimodal', 
-      icon: Zap 
-    },
+   
   ];
 
   return (

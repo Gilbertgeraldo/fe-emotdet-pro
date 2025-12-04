@@ -90,7 +90,7 @@ export default function FacePage() {
                 {result ? (
                   // KONDISI 1: Jika sudah ada hasil dari Backend Python
                   <div className="w-full">
-                     <ResultCard result={result} type="" />
+                     <ResultCard result={result} type="face" />
                   </div>
                 ) : (
                   // KONDISI 2: Jika belum ada hasil (Placeholder)
