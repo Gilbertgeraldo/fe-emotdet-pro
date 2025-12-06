@@ -14,7 +14,6 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
   const [error, setError] = useState('');
 
   const handleAnalyze = async () => {
-    // 1. Validate Input
     if (!text.trim()) {
       setError('Please enter some text first.');
       return;
@@ -28,26 +27,36 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
         'https://backend-emotpro-production.up.railway.app/api/text/analyze-text', 
         { text: text.trim() },
         {
-            headers: {
-                'Content-Type': 'application/json'
-            }
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
       );
-      if (response.data && response.data.success) {
-          onResult(response.data);
+
+      console.log("API Response:", response.data);
+
+      // Backend tidak mengirim field 'success', langsung cek apakah ada data
+      if (response.data) {
+        onResult(response.data);
       } else {
-          setError('Backend returned an unexpected format.');
-          console.error('Unexpected response:', response.data);
+        setError('No data received from backend.');
       }
       
     } catch (err: any) {
-      console.error("API Error:", err);
+      console.error("Full Error:", err);
+
       if (err.code === "ERR_NETWORK") {
-          setError("Cannot connect to server. The backend might be sleeping or down.");
+        setError("Cannot connect to server. The backend might be sleeping or down.");
+      } else if (err.response?.status === 404) {
+        setError("Endpoint not found (404). Check your API URL.");
+      } else if (err.response?.status === 500) {
+        setError("Server error (500). Backend might be having issues.");
       } else if (err.response) {
-          setError(err.response.data?.detail || `Server Error: ${err.response.status}`);
+        setError(err.response.data?.detail || `Server Error: ${err.response.status}`);
+      } else if (err.request) {
+        setError('No response from server. Please check your connection.');
       } else {
-          setError('Failed to analyze text. Please try again.');
+        setError('Failed to analyze text. Please try again.');
       }
     } finally {
       setLoading(false);

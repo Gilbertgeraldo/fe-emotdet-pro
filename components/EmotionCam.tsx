@@ -3,10 +3,9 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import Webcam from 'react-webcam';
 import axios from 'axios';
-import { Camera, AlertCircle } from 'lucide-react'; // Opsional: Tambah ikon biar cantik
+import { Camera, AlertCircle } from 'lucide-react';
 
 const EmotionCam = () => {
-  // FIX: Tambahkan tipe generic <Webcam> agar tidak error di TypeScript
   const webcamRef = useRef<Webcam>(null);
   const [emotion, setEmotion] = useState("Menunggu...");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -19,7 +18,6 @@ const EmotionCam = () => {
   };
 
   const captureAnalyze = useCallback(async () => {
-    // Cek jika webcam siap & tidak sedang memproses request sebelumnya (agar tidak tumpang tindih)
     if (webcamRef.current && !isProcessing) {
       const imageSrc = webcamRef.current.getScreenshot();
 
@@ -49,9 +47,8 @@ const EmotionCam = () => {
 
         } catch (error) {
           console.error("Gagal analisis:", error);
-          // Jangan ubah tulisan emosi jadi error agar UI tidak 'flicker'
         } finally {
-          setIsProcessing(false); // Lepas flag sibuk
+          setIsProcessing(false);
         }
       }
     }

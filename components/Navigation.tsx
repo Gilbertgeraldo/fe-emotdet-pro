@@ -8,8 +8,6 @@ import { useState } from 'react';
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-
-  // Konfigurasi Menu
   const navItems = [
     { 
       href: '/', 

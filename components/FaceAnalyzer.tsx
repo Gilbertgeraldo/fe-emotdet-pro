@@ -31,13 +31,9 @@ export default function FaceAnalyzer({ onResult }: FaceAnalyzerProps) {
 
     if (imageSrc) {
       try {
-        // 1. Siapkan Data Gambar
         const blob = await base64ToBlob(imageSrc);
         const formData = new FormData();
         formData.append('file', blob, 'capture.jpg');
-
-        // 2. KIRIM KE BACKEND (INI YANG ANDA CARI)
-        // URL sudah disesuaikan dengan Railway Anda
         const response = await axios.post(
           'https://backend-emotpro-production.up.railway.app/vision/detect-emotion', 
           formData, 
@@ -47,8 +43,6 @@ export default function FaceAnalyzer({ onResult }: FaceAnalyzerProps) {
         );
 
         const data = response.data;
-        
-        // 3. Jika Berhasil, Kirim Data ke Halaman Utama
         if (data.success && data.faces.length > 0) {
             const faceData = data.faces[0];
             onResult({
@@ -62,13 +56,10 @@ export default function FaceAnalyzer({ onResult }: FaceAnalyzerProps) {
             setError('');
         } 
       } catch (err) {
-        // Error kita sembunyikan di console agar UI tidak kedap-kedip
         console.error("Gagal Analisis:", err);
       }
     }
   }, [isAnalyzing, onResult]);
-
-  // Loop otomatis setiap 1 detik jika tombol Start ditekan
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     if (isAnalyzing) intervalId = setInterval(captureAndAnalyze, 1000);
