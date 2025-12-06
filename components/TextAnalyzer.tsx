@@ -14,9 +14,9 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
   const [error, setError] = useState('');
 
   const handleAnalyze = async () => {
-    // 1. Validasi Input
+    // 1. Validate Input
     if (!text.trim()) {
-      setError('Mohon isi teks terlebih dahulu');
+      setError('Please enter some text first.');
       return;
     }
 
@@ -26,13 +26,29 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
     try {
       const response = await axios.post(
         'https://backend-emotpro-production.up.railway.app/api/text/analyze', 
-        { text: text.trim() }
+        { text: text.trim() },
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
       );
-      onResult(response.data);
+      if (response.data && response.data.success) {
+          onResult(response.data);
+      } else {
+          setError('Backend returned an unexpected format.');
+          console.error('Unexpected response:', response.data);
+      }
       
     } catch (err: any) {
-      console.error(err);
-      setError(err.response?.data?.detail || 'Gagal menganalisis teks. Pastikan backend aktif.');
+      console.error("API Error:", err);
+      if (err.code === "ERR_NETWORK") {
+          setError("Cannot connect to server. The backend might be sleeping or down.");
+      } else if (err.response) {
+          setError(err.response.data?.detail || `Server Error: ${err.response.status}`);
+      } else {
+          setError('Failed to analyze text. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -41,6 +57,7 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
       
+      {/* Header */}
       <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
         <MessageSquare className="text-blue-600" size={20} />
         <h2 className="text-lg font-bold text-slate-800">Text Emotion Input</h2>
@@ -52,7 +69,7 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Tuliskan sesuatu di sini... (Contoh: Saya sangat senang hari ini!)"
+            placeholder="Type something here... (e.g., I am very happy with the results!)"
             className="w-full h-40 p-4 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none text-slate-700 placeholder:text-slate-400 text-sm transition-all"
             disabled={loading}
             maxLength={500}
@@ -82,12 +99,12 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
           {loading ? (
             <>
               <Loader2 size={20} className="animate-spin" />
-              Menganalisis...
+              Analyzing...
             </>
           ) : (
             <>
               <Send size={20} />
-              Analisis Teks
+              Analyze Text
             </>
           )}
         </button>
@@ -95,7 +112,7 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
         {/* Tips */}
         <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
           <p className="text-xs text-blue-700 flex items-center gap-1">
-            💡 <strong>Tips:</strong> Gunakan kalimat yang lebih panjang atau spesifik untuk hasil deteksi emosi yang lebih akurat.
+            💡 <strong>Tip:</strong> Use longer, descriptive sentences for better accuracy.
           </p>
         </div>
       </div>
