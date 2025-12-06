@@ -34,7 +34,7 @@ export default function FaceAnalyzer({ onResult }: FaceAnalyzerProps) {
 
         // 2. Kirim ke Endpoint Vision (Port 8000)
         // Pastikan URL ini sesuai dengan router vision.py kamu
-        const response = await axios.post('http://127.0.0.1:8000/vision/detect-emotion', formData, {
+        const response = await axios.post('backend-emotpro-production.up.railway.app/vision/detection-emotion', formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
 

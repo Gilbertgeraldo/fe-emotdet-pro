@@ -23,7 +23,7 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
     setError('');
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/analyze-text', {
+      const response = await axios.post('backend-emotpro-production.up.railway.app/api/analyze-text', {
         text: text.trim(),
       });
       onResult(response.data);
