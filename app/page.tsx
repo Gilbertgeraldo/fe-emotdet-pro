@@ -75,19 +75,17 @@ export default function Home() {
                   <p className="text-gray-600 leading-relaxed">
                     Analyze sentiment and emotional tone from written text using Natural Language Processing models.
                   </p>
-                  <Link href="/Text">
-                    <div className="mt-4 flex items-center text-indigo-600 font-semibold opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-2 transition-all cursor-pointer">
-                     <span>Open Camera</span>
-                  <TrendingUp className="w-4 h-4 ml-2" />
-                    </div>
-                  </Link>
+                  <div className="mt-4 flex items-center text-indigo-600 font-semibold opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-2 transition-all cursor-pointer">
+                    <span>Analyze Text</span>
+                    <TrendingUp className="w-4 h-4 ml-2" />
+                  </div>
                
                 </div>
               </div>
             </Link>
 
             {/* CARD 2: FACE DETECTION */}
-            <Link href="/face">
+            <Link href="/EmotionCam">
               <div className="group relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2 h-full">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-violet-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                 
@@ -106,12 +104,10 @@ export default function Home() {
                     Real-time facial expression recognition using webcam. Detects micro-expressions instantly.
                   </p>
                   
-                  <Link href="/EmotionCam">
-                    <div className="mt-4 flex items-center text-indigo-600 font-semibold opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-2 transition-all cursor-pointer">
-                     <span>Open Camera</span>
-                  <TrendingUp className="w-4 h-4 ml-2" />
-                    </div>
-                  </Link>
+                  <div className="mt-4 flex items-center text-indigo-600 font-semibold opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-2 transition-all cursor-pointer">
+                    <span>Open Camera</span>
+                    <TrendingUp className="w-4 h-4 ml-2" />
+                  </div>
                 </div>
               </div>
             </Link>
