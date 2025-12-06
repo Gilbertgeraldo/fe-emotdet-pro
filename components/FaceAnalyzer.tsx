@@ -15,31 +15,40 @@ export default function FaceAnalyzer({ onResult }: FaceAnalyzerProps) {
   const [error, setError] = useState('');
   const [cameraReady, setCameraReady] = useState(false);
 
+  // Helper: Ubah Base64 ke Blob (Agar bisa dikirim sebagai File)
   const base64ToBlob = async (base64String: string) => {
     const base64Response = await fetch(base64String);
     const blob = await base64Response.blob();
     return blob;
   };
 
+  // --- FUNGSI UTAMA (Di sinilah axios.post berada) ---
   const captureAndAnalyze = useCallback(async () => {
+    // Cek apakah kamera siap & mode analisis aktif
     if (!webcamRef.current || !isAnalyzing) return;
+
     const imageSrc = webcamRef.current.getScreenshot();
 
     if (imageSrc) {
       try {
-        // 1. Convert ke Blob
+        // 1. Siapkan Data Gambar
         const blob = await base64ToBlob(imageSrc);
         const formData = new FormData();
         formData.append('file', blob, 'capture.jpg');
 
-        // 2. Kirim ke Endpoint Vision (Port 8000)
-        // Pastikan URL ini sesuai dengan router vision.py kamu
-        const response = await axios.post('backend-emotpro-production.up.railway.app/vision/detection-emotion', formData, {
+        // 2. KIRIM KE BACKEND (INI YANG ANDA CARI)
+        // URL sudah disesuaikan dengan Railway Anda
+        const response = await axios.post(
+          'https://backend-emotpro-production.up.railway.app/vision/detect-emotion', 
+          formData, 
+          {
             headers: { 'Content-Type': 'multipart/form-data' },
-        });
+          }
+        );
 
         const data = response.data;
         
+        // 3. Jika Berhasil, Kirim Data ke Halaman Utama
         if (data.success && data.faces.length > 0) {
             const faceData = data.faces[0];
             onResult({
@@ -48,18 +57,18 @@ export default function FaceAnalyzer({ onResult }: FaceAnalyzerProps) {
                 timestamp: new Date().toLocaleTimeString(),
                 source: 'Live Camera',
                 raw_data: faceData,
-                // Kirim data lengkap untuk grafik
                 all_scores: faceData.all_scores 
             });
             setError('');
         } 
       } catch (err) {
-        // Silent error agar tidak mengganggu UI saat loop
-        console.error("API Fail:", err);
+        // Error kita sembunyikan di console agar UI tidak kedap-kedip
+        console.error("Gagal Analisis:", err);
       }
     }
   }, [isAnalyzing, onResult]);
 
+  // Loop otomatis setiap 1 detik jika tombol Start ditekan
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     if (isAnalyzing) intervalId = setInterval(captureAndAnalyze, 1000);
@@ -68,19 +77,24 @@ export default function FaceAnalyzer({ onResult }: FaceAnalyzerProps) {
 
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+      {/* Header Kartu */}
       <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
         <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
           <Camera className="text-indigo-600" size={20} />
           Live Face Detector
         </h2>
         {isAnalyzing && (
-          <span className="flex h-3 w-3 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-          </span>
+          <div className="flex items-center gap-2 px-2 py-1 bg-red-100 rounded-full">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+            </span>
+            <span className="text-xs font-bold text-red-600">LIVE</span>
+          </div>
         )}
       </div>
 
+      {/* Tampilan Kamera */}
       <div className="relative bg-slate-900 min-h-[360px] flex items-center justify-center overflow-hidden">
         {!cameraReady && (
            <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 z-10">
@@ -99,16 +113,26 @@ export default function FaceAnalyzer({ onResult }: FaceAnalyzerProps) {
         />
       </div>
 
+      {/* Tombol Kontrol */}
       <div className="p-4 bg-white">
-        {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
+        {error && <div className="text-red-500 text-sm mb-2 flex items-center gap-2"><AlertCircle size={16}/> {error}</div>}
+        
         <button
           onClick={() => setIsAnalyzing(!isAnalyzing)}
           disabled={!cameraReady}
-          className={`w-full py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all ${
-            isAnalyzing ? 'bg-red-50 text-red-600' : 'bg-indigo-600 text-white'
+          className={`w-full py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-md ${
+            !cameraReady 
+              ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+              : isAnalyzing 
+                ? 'bg-red-50 text-red-600 border border-red-200 hover:bg-red-100' 
+                : 'bg-indigo-600 text-white hover:bg-indigo-700'
           }`}
         >
-          {isAnalyzing ? <><StopCircle size={20} /> Stop Analysis</> : <><Video size={20} /> Start Analysis</>}
+          {isAnalyzing ? (
+            <><StopCircle size={20} /> Stop Analysis</>
+          ) : (
+            <><Video size={20} /> Start Analysis</>
+          )}
         </button>
       </div>
     </div>

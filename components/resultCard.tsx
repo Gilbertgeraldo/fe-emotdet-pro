@@ -14,7 +14,7 @@ import { TrendingUp, Volume2, Zap, Camera } from 'lucide-react';
 
 interface ResultCardProps {
   result: any;
-  type: 'text' | 'audio' | 'multimodal' | 'face'; // Tambahkan 'face' agar rapi
+  type: 'text' | 'audio' | 'multimodal' | 'face';
 }
 
 const emotionEmojis: Record<string, string> = {

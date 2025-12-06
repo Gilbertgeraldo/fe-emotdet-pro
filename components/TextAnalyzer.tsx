@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import { Loader, AlertCircle } from 'lucide-react';
+import { Loader2, AlertCircle, MessageSquare, Send } from 'lucide-react';
 
 interface TextAnalyzerProps {
   onResult: (result: any) => void;
@@ -14,8 +14,9 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
   const [error, setError] = useState('');
 
   const handleAnalyze = async () => {
+    // 1. Validasi Input
     if (!text.trim()) {
-      setError('Please enter some text');
+      setError('Mohon isi teks terlebih dahulu');
       return;
     }
 
@@ -23,60 +24,80 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
     setError('');
 
     try {
-      const response = await axios.post('backend-emotpro-production.up.railway.app/api/analyze-text', {
-        text: text.trim(),
-      });
+      const response = await axios.post(
+        'https://backend-emotpro-production.up.railway.app/api/text/analyze', 
+        { text: text.trim() }
+      );
       onResult(response.data);
+      
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Failed to analyze');
+      console.error(err);
+      setError(err.response?.data?.detail || 'Gagal menganalisis teks. Pastikan backend aktif.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="card">
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">Text Input</h2>
-
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Enter text to analyze..."
-        className="input-field h-32 resize-none font-mono text-sm mb-4"
-        disabled={loading}
-        maxLength={500}
-      />
-
-      <div className="text-xs text-gray-500 mb-4">
-        {text.length}/500 characters
+    <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+      
+      <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center gap-2">
+        <MessageSquare className="text-blue-600" size={20} />
+        <h2 className="text-lg font-bold text-slate-800">Text Emotion Input</h2>
       </div>
 
-      {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
-          <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
-          <p className="text-red-700 text-sm">{error}</p>
+      <div className="p-5 space-y-4">
+        {/* Text Area */}
+        <div className="relative">
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Tuliskan sesuatu di sini... (Contoh: Saya sangat senang hari ini!)"
+            className="w-full h-40 p-4 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none text-slate-700 placeholder:text-slate-400 text-sm transition-all"
+            disabled={loading}
+            maxLength={500}
+          />
+          <div className="absolute bottom-3 right-3 text-xs text-slate-400 bg-white/80 px-2 py-1 rounded-md">
+            {text.length}/500
+          </div>
         </div>
-      )}
 
-      <button
-        onClick={handleAnalyze}
-        disabled={loading || !text.trim()}
-        className="btn-primary w-full flex items-center justify-center gap-2"
-      >
-        {loading ? (
-          <>
-            <Loader size={18} className="animate-spin" />
-            Analyzing...
-          </>
-        ) : (
-          'Analyze'
+        {/* Error Message */}
+        {error && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm animate-in fade-in slide-in-from-top-2">
+            <AlertCircle size={16} /> {error}
+          </div>
         )}
-      </button>
 
-      <div className="mt-4 p-3 bg-blue-50 rounded-lg text-sm">
-        <p className="text-blue-700">
-          💡 Tip: More text = Better results
-        </p>
+        {/* Action Button */}
+        <button
+          onClick={handleAnalyze}
+          disabled={loading || !text.trim()}
+          className={`w-full py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98] ${
+            loading || !text.trim()
+              ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+              : 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg'
+          }`}
+        >
+          {loading ? (
+            <>
+              <Loader2 size={20} className="animate-spin" />
+              Menganalisis...
+            </>
+          ) : (
+            <>
+              <Send size={20} />
+              Analisis Teks
+            </>
+          )}
+        </button>
+
+        {/* Tips */}
+        <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
+          <p className="text-xs text-blue-700 flex items-center gap-1">
+            💡 <strong>Tips:</strong> Gunakan kalimat yang lebih panjang atau spesifik untuk hasil deteksi emosi yang lebih akurat.
+          </p>
+        </div>
       </div>
     </div>
   );

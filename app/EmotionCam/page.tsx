@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import FaceAnalyzer from '@/components/FaceAnalyzer'; // Pastikan komponen ini sudah kamu buat
+import FaceAnalyzer from '@/components/FaceAnalyzer';
 import ResultCard from '@/components/resultCard';
 import { ChevronLeft, Camera, Activity, Zap } from 'lucide-react';
 

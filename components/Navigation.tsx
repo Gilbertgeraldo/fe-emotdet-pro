@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, LayoutDashboard, Type, Camera, Zap } from 'lucide-react'; // Import ikon tambahan
+import { Menu, X, LayoutDashboard, Type, Camera, Zap } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Navigation() {
