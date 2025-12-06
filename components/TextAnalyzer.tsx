@@ -25,7 +25,7 @@ export default function TextAnalyzer({ onResult }: TextAnalyzerProps) {
 
     try {
       const response = await axios.post(
-        'https://backend-emotpro-production.up.railway.app/api/text/analyze', 
+        'https://backend-emotpro-production.up.railway.app/api/text/analyze-text', 
         { text: text.trim() },
         {
             headers: {
