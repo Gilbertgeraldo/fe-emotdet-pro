@@ -46,26 +46,16 @@ export default function FacePage() {
       {/* --- MAIN CONTENT --- */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* BAGIAN KIRI: KAMERA (Col-Span 7) */}
           <div className="lg:col-span-7 flex flex-col gap-4">
             <div className="bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-800 relative min-h-[480px] flex flex-col justify-center items-center group">
               
               <div className="absolute top-4 left-4 z-10 bg-black/50 backdrop-blur px-3 py-1 rounded-full border border-white/10 text-white text-xs font-mono">
                 LIVE FEED • 30 FPS
               </div>
-
-              {/* === AREA KAMERA === */}
-              {/* Ini adalah komponen yang memuat Webcam. 
-                  Jika yang muncul masih upload CSV, berarti file FaceAnalyzer.tsx kamu isinya masih salah. */}
               <div className="w-full h-full relative z-0">
                  <FaceAnalyzer onResult={setResult} />
               </div>
-              {/* =================== */}
-
             </div>
-
-            {/* Info Box Bawah Kamera */}
             <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-start gap-3">
               <div className="p-2 bg-blue-100 text-blue-600 rounded-lg">
                 <Zap size={20} />
@@ -77,9 +67,7 @@ export default function FacePage() {
                 </p>
               </div>
             </div>
-          </div>
-
-          {/* BAGIAN KANAN: HASIL (Col-Span 5) */}
+          </div> 
           <div className="lg:col-span-5 flex flex-col h-full">
             <div className="bg-white rounded-2xl shadow-lg border border-slate-200 flex-1 flex flex-col overflow-hidden">
               <div className="p-5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
@@ -88,12 +76,10 @@ export default function FacePage() {
 
               <div className="p-6 flex-1 flex flex-col justify-center items-center">
                 {result ? (
-                  // KONDISI 1: Jika sudah ada hasil dari Backend Python
                   <div className="w-full">
                      <ResultCard result={result} type="face" />
                   </div>
                 ) : (
-                  // KONDISI 2: Jika belum ada hasil (Placeholder)
                   <div className="text-center space-y-4 opacity-60">
                     <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400">
                       <Activity size={32} />
