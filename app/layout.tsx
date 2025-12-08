@@ -1,13 +1,11 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Navigation from '@/components/Navigation';
-import ResultCard from '@/components/resultCard';
-import TextAnalyzer from '@/components/TextAnalyzer';
-import EmotionCam from '@/components/EmotionCam';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 export const metadata: Metadata = {
-  title: 'Face & Text Emotion Analyzer',
-  description: 'Multimodal emotion detection system',
+  title: 'Face & Text Emotion Analyzer | StatCorr AI',
+  description: 'Multimodal emotion detection system with real-time face recognition and text sentiment analysis powered by AI',
 };
 
 export default function RootLayout({
@@ -16,10 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-gray-50">
-        <Navigation />
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="bg-gray-50 dark:bg-slate-900 transition-colors duration-300">
+        <ThemeProvider>
+          <Navigation />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
