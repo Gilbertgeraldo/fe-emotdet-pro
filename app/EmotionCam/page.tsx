@@ -114,9 +114,6 @@ export default function FacePage() {
           {/* Camera Section */}
           <div className="lg:col-span-7 flex flex-col gap-3 sm:gap-4">
             <div className="bg-slate-900 rounded-xl sm:rounded-2xl shadow-xl overflow-hidden border border-slate-800 relative min-h-[280px] sm:min-h-[380px] lg:min-h-[480px] flex flex-col justify-center items-center group">
-              <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-10 bg-black/50 backdrop-blur px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/10 text-white text-[10px] sm:text-xs font-mono">
-                LIVE FEED • 30 FPS
-              </div>
               <div className="w-full h-full relative z-0">
                 <FaceAnalyzerWithBoundingBox
                   onResult={handleResult}
