@@ -18,17 +18,72 @@ interface ResultCardProps {
 }
 
 const emotionEmojis: Record<string, string> = {
-  'Marah': '😠', 'angry': '😠',
-  'Jijik': '🤢', 'disgust': '🤢',
-  'Takut': '😨', 'fear': '😨',
-  'Senang': '😊', 'happy': '😊', 'joy': '😊',
-  'Netral': '😐', 'neutral': '😐',
-  'Sedih': '😢', 'sad': '😢',
-  'Terkejut': '😲', 'surprise': '😲',
+  // Indonesian
+  'marah': '😠',
+  'jijik': '🤢',
+  'takut': '😨',
+  'senang': '😊',
+  'netral': '😐',
+  'sedih': '😢',
+  'terkejut': '😲',
+  // English lowercase
+  'angry': '😠',
+  'anger': '😠',
+  'disgust': '🤢',
+  'fear': '😨',
+  'happy': '😊',
+  'happiness': '😊',
+  'joy': '😊',
+  'neutral': '😐',
+  'sad': '😢',
+  'sadness': '😢',
+  'surprise': '😲',
+  'surprised': '😲',
 };
+
+// Mapping untuk menormalisasi label yang ditampilkan (Bahasa Indonesia)
+const emotionLabels: Record<string, string> = {
+  // Joy/Happy variants
+  'joy': 'Senang',
+  'happy': 'Senang',
+  'happiness': 'Senang',
+  'senang': 'Senang',
+  // Anger variants
+  'angry': 'Marah',
+  'anger': 'Marah',
+  'marah': 'Marah',
+  // Sad variants
+  'sad': 'Sedih',
+  'sadness': 'Sedih',
+  'sedih': 'Sedih',
+  // Surprise variants
+  'surprise': 'Terkejut',
+  'surprised': 'Terkejut',
+  'terkejut': 'Terkejut',
+  // Fear variants
+  'fear': 'Takut',
+  'takut': 'Takut',
+  // Disgust variants
+  'disgust': 'Jijik',
+  'jijik': 'Jijik',
+  // Neutral variants
+  'neutral': 'Netral',
+  'netral': 'Netral',
+};
+
 const EMOTION_LABELS = ["Marah", "Jijik", "Takut", "Senang", "Netral", "Sedih", "Terkejut"];
 
 export default function ResultCard({ result, type }: ResultCardProps) {
+
+  // Helper function to normalize emotion label
+  const getNormalizedLabel = (emotion: string) => {
+    return emotionLabels[emotion.toLowerCase()] || emotion;
+  };
+
+  // Helper function to get emoji (case-insensitive)
+  const getEmoji = (emotion: string) => {
+    return emotionEmojis[emotion.toLowerCase()] || emotionEmojis[emotion] || '😐';
+  };
 
   // 1. DATA UNTUK TEXT
   const textData = result.sentiment_scores
@@ -59,10 +114,10 @@ export default function ResultCard({ result, type }: ResultCardProps) {
             <p className="text-xs sm:text-sm text-gray-600 dark:text-slate-400 font-medium uppercase tracking-wider">Detected Emotion</p>
             <div className="flex items-center gap-2 sm:gap-3 mt-1 sm:mt-2">
               <span className="text-3xl sm:text-4xl lg:text-5xl">
-                {emotionEmojis[result.emotion] || '😐'}
+                {getEmoji(result.emotion)}
               </span>
               <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white capitalize">
-                {result.emotion}
+                {getNormalizedLabel(result.emotion)}
               </h3>
             </div>
           </div>

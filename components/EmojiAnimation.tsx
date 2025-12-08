@@ -8,20 +8,62 @@ interface EmojiAnimationProps {
 }
 
 const emotionEmojis: Record<string, { emoji: string; particles: string[] }> = {
+    // Happy/Joy variants
     'senang': { emoji: '😊', particles: ['✨', '🌟', '⭐', '💫'] },
     'happy': { emoji: '😊', particles: ['✨', '🌟', '⭐', '💫'] },
+    'happiness': { emoji: '😊', particles: ['✨', '🌟', '⭐', '💫'] },
+    'joy': { emoji: '😊', particles: ['✨', '🌟', '⭐', '💫'] },
+    // Angry variants
     'marah': { emoji: '😠', particles: ['💢', '🔥', '💥', '⚡'] },
     'angry': { emoji: '😠', particles: ['💢', '🔥', '💥', '⚡'] },
+    'anger': { emoji: '😠', particles: ['💢', '🔥', '💥', '⚡'] },
+    // Sad variants
     'sedih': { emoji: '😢', particles: ['💧', '🌧️', '💔', '😿'] },
     'sad': { emoji: '😢', particles: ['💧', '🌧️', '💔', '😿'] },
+    'sadness': { emoji: '😢', particles: ['💧', '🌧️', '💔', '😿'] },
+    // Surprise variants
     'terkejut': { emoji: '😲', particles: ['❗', '⁉️', '💥', '🎆'] },
     'surprise': { emoji: '😲', particles: ['❗', '⁉️', '💥', '🎆'] },
+    'surprised': { emoji: '😲', particles: ['❗', '⁉️', '💥', '🎆'] },
+    // Fear variants
     'takut': { emoji: '😨', particles: ['👻', '💀', '🌙', '😱'] },
     'fear': { emoji: '😨', particles: ['👻', '💀', '🌙', '😱'] },
+    // Disgust variants
     'jijik': { emoji: '🤢', particles: ['🤮', '💚', '🥴', '😖'] },
     'disgust': { emoji: '🤢', particles: ['🤮', '💚', '🥴', '😖'] },
+    // Neutral variants
     'netral': { emoji: '😐', particles: ['💭', '🔵', '⚪', '💠'] },
     'neutral': { emoji: '😐', particles: ['💭', '🔵', '⚪', '💠'] },
+};
+
+// Mapping untuk menormalisasi label yang ditampilkan (Bahasa Indonesia)
+const emotionLabels: Record<string, string> = {
+    // Joy/Happy variants
+    'joy': 'Senang',
+    'senang': 'Senang',
+    'happy': 'Senang',
+    'happiness': 'Senang',
+    // Anger variants
+    'marah': 'Marah',
+    'angry': 'Marah',
+    'anger': 'Marah',
+    // Sad variants
+    'sedih': 'Sedih',
+    'sad': 'Sedih',
+    'sadness': 'Sedih',
+    // Surprise variants
+    'terkejut': 'Terkejut',
+    'surprise': 'Terkejut',
+    'surprised': 'Terkejut',
+    // Fear variants
+    'takut': 'Takut',
+    'fear': 'Takut',
+    // Disgust variants
+    'jijik': 'Jijik',
+    'disgust': 'Jijik',
+    // Neutral variants
+    'netral': 'Netral',
+    'neutral': 'Netral',
 };
 
 export default function EmojiAnimation({ emotion, show }: EmojiAnimationProps) {
@@ -93,7 +135,7 @@ export default function EmojiAnimation({ emotion, show }: EmojiAnimationProps) {
                 className="absolute bottom-1/3 text-2xl sm:text-3xl font-bold text-white drop-shadow-lg capitalize"
                 style={{ animation: 'fadeInUp 0.5s ease-out 0.3s both' }}
             >
-                {emotion}
+                {emotionLabels[emotion.toLowerCase()] || emotion}
             </div>
 
             <style jsx>{`
